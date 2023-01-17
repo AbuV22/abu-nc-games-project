@@ -22,6 +22,20 @@ const fetchReviews = () => {
       return data.rows;
     });
 };
-// const fetchReviewsID = () => {};
+const fetchReviewsID = () => {
+  return db
+    .query(
+      `
+    SELECT reviews.review_id, reviews.title, reviews.review_body, reviews.designer, reviews.review_img_url, reviews.votes, reviews.category, reviews.owner, reviews.created_at
+    FROM reviews
+    WHERE reviews.review_id = $1
+  `,
+      [review_id]
+    )
+    .then((data) => {
+      console.log(data.rows[0]);
+      return data.rows[0];
+    });
+};
 
-module.exports = { fetchCategories, fetchReviews };
+module.exports = { fetchCategories, fetchReviews, fetchReviewsID };

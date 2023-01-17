@@ -1,3 +1,4 @@
+const { response } = require("express");
 const {
   fetchCategories,
   fetchReviews,
@@ -20,9 +21,11 @@ const getReviews = (req, res, next) => {
     .catch(next);
 };
 
-// const getReviewsID = () => {
-//   fetchReviewsID(id).then((something) => {
-//     console.log(something);
-//   });
-// };
-module.exports = { getCategories, getReviews };
+const getReviewsID = () => {
+  const { review_id } = request.params;
+  fetchReviewsID(review_id).then((reviews) => {
+    console.log(reviews);
+    response.status(200).send({ reviews });
+  });
+};
+module.exports = { getCategories, getReviews, getReviewsID };
