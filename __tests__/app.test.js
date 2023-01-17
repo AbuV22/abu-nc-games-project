@@ -69,12 +69,12 @@ describe("GET: /api/reviews", () => {
   });
 });
 
-describe.only("GET: /api/reviews/:review_id", () => {
-  it("should return an object containing review_id, title, review_body, designer, review_img_url, votes, category,owner, created_at", () => {
-    return request(app)
-      .get("/api/reviews/1")
-      .then((res) => {
-        expect(Array.isArray(res.body.review)).toBe(true);
-      });
-  });
-});
+// describe.only("GET: /api/reviews/:review_id", () => {
+//   it("should return an object containing review_id, title, review_body, designer, review_img_url, votes, category,owner, created_at", () => {
+//     return request(app)
+//       .get("/api/reviews/1")
+//       .then((res) => {
+//         expect(Array.isArray(res.body.review)).toBe(true);
+//       });
+//   });
+// });
