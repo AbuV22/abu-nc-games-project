@@ -1,9 +1,10 @@
 const express = require("express");
-const { getCategories } = require("./app.controller");
 const app = express();
+const { getCategories, getReviews } = require("./app.controller");
 
 app.use(express.json());
 app.get("/api/categories", getCategories);
+app.get("/api/reviews", getReviews);
 
 // PSQL Error
 app.use((err, req, res, next) => {
