@@ -21,11 +21,15 @@ const getReviews = (req, res, next) => {
     .catch(next);
 };
 
-const getReviewsID = () => {
-  const { review_id } = request.params;
-  fetchReviewsID(review_id).then((reviews) => {
-    console.log(reviews);
-    response.status(200).send({ reviews });
-  });
+const getReviewsID = (req, res) => {
+  const { review_id } = req.params;
+  fetchReviewsID(review_id)
+    .then((reviews) => {
+      console.log(reviews);
+      res.status(200).send({ reviews });
+    })
+    .catch((err) => {
+      res.status(500).send({ message: err.message });
+    });
 };
 module.exports = { getCategories, getReviews, getReviewsID };

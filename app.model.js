@@ -22,7 +22,7 @@ const fetchReviews = () => {
       return data.rows;
     });
 };
-const fetchReviewsID = () => {
+const fetchReviewsID = (review_id) => {
   return db
     .query(
       `
