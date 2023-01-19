@@ -34,8 +34,36 @@ const fetchReviewsID = (review_id) => {
       [review_id]
     )
     .then((data) => {
+      if (!data.rows.length) {
+        return Promise.reject({ message: "Review not found", status: 404 });
+      }
       return data.rows[0];
     });
 };
 
-module.exports = { fetchCategories, fetchReviews, fetchReviewsID };
+// const fetchReviewsIDComment = (review_id) => {
+//   return db
+//     .query(
+//       `
+//   SELECT comment_id, votes, created_at, author, body, review_id
+//   FROM comments
+//   WHERE review_id = $1
+//   ORDER BY created_at DESC
+//   `,
+//       [review_id]
+//     )
+//     .then((data) => {
+//       if (!data.rows.length) {
+//         return Promise.reject("Review ID not found");
+//       }
+//       console.log(data.rows);
+
+//       return data.rows;
+//     });
+// };
+
+module.exports = {
+  fetchCategories,
+  fetchReviews,
+  fetchReviewsID,
+};
