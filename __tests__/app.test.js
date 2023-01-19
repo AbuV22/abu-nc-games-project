@@ -110,25 +110,42 @@ describe("GET: /api/reviews/:review_id", () => {
   });
 });
 
-// describe("GET: /api/reviews/:review_id/comments", () => {
-//   it("should return an array of comments for the specified review_id with the most recent comment first", () => {
-//     const review_id = 1;
-//     const expectedComment = {
-//       comment_id: expect.any(Number),
-//       votes: expect.any(Number),
-//       created_at: expect.any(String),
-//       author: expect.any(String),
-//       body: expect.any(String),
-//       review_id: expect.any(Number),
-//     };
-//     return request(app)
-//       .get(`/api/reviews/${review_id}/comments`)
-//       .expect(200)
-//       .then((res) => {
-//         expect(Array.isArray(res.body)).toBe(true);
-//         res.body.forEach((comment) => {
-//           expect(comment).toMatchObject(expectedComment);
-//         });
-//       });
-//   });
-// });
+describe("GET: /api/reviews/:review_id/comments", () => {
+  it("should return an array of comments for the specified review_id with the most recent comment first", () => {
+    const review_id = 2;
+    const expectedComment = {
+      comment_id: expect.any(Number),
+      votes: expect.any(Number),
+      created_at: expect.any(String),
+      author: expect.any(String),
+      body: expect.any(String),
+      review_id: expect.any(Number),
+    };
+    return request(app)
+      .get(`/api/reviews/${review_id}/comments`)
+      .expect(200)
+      .then((res) => {
+        expect(Array.isArray(res.body)).toBe(true);
+        res.body.forEach((comment) => {
+          expect(comment).toMatchObject(expectedComment);
+        });
+      });
+  });
+  it("should return 404 error when the review ID doesnt exist", () => {
+    const reviewID = 999999;
+    return request(app)
+      .get(`/api/reviews/${reviewID}/comments`)
+      .expect(404)
+      .then((res) => {
+        expect(res.body.message).toEqual("Review not found");
+      });
+  });
+  it("should return a 400 error when the review ID is not valid", () => {
+    return request(app)
+      .get(`/api/reviews/random/comments`)
+      .expect(400)
+      .then((res) => {
+        expect(res.body.message).toEqual("Invalid data type used");
+      });
+  });
+});
