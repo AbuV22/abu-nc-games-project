@@ -10,7 +10,11 @@ app.get("/api/reviews/:review_id", getReviewsID);
 
 // PSQL Error
 app.use((err, req, res, next) => {
-  if (err.status && err.message) {
+  if (err.message === "Review not found") {
+    res.status(404).send({ message: err.message });
+  } else if ((err.message = "Invalid Review ID")) {
+    res.status(400).send({ message: err.message });
+  } else if (err.status && err.message) {
     res.status(err.status).send({ message: err.message });
   } else {
     next(err);

@@ -87,8 +87,25 @@ describe("GET: /api/reviews/:review_id", () => {
       .get(`/api/reviews/${review_id}`)
       .expect(200)
       .then((res) => {
-        console.log(res.body.reviews);
         expect(res.body.reviews).toMatchObject(expectedReview);
+      });
+  });
+  it("should return 404 error when the review ID doesnt exist", () => {
+    const reviewID = 999999;
+    return request(app)
+      .get(`/api/reviews/${reviewID}`)
+      .expect(404)
+      .then((res) => {
+        expect(res.body.message).toEqual("Review not found");
+      });
+  });
+  it("should return a 400 error when the review ID is not valid", () => {
+    const reviewID = "katherinerules";
+    return request(app)
+      .get(`/api/reviews/${reviewID}`)
+      .expect(400)
+      .then((res) => {
+        expect(res.body.message).toEqual("Invalid Review ID");
       });
   });
 });

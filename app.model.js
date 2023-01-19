@@ -1,4 +1,5 @@
 const db = require("./db/connection");
+const reviews = require("./db/data/test-data/reviews");
 
 const fetchCategories = () => {
   return db.query("SELECT * FROM categories;").then((data) => {
@@ -33,7 +34,6 @@ const fetchReviewsID = (review_id) => {
       [review_id]
     )
     .then((data) => {
-      console.log(data.rows[0]);
       return data.rows[0];
     });
 };
