@@ -105,7 +105,7 @@ describe("GET: /api/reviews/:review_id", () => {
       .get(`/api/reviews/${reviewID}`)
       .expect(400)
       .then((res) => {
-        expect(res.body.message).toEqual("Invalid Review ID");
+        expect(res.body.message).toEqual("Invalid data type used");
       });
   });
 });

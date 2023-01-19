@@ -8,6 +8,13 @@ app.get("/api/categories", getCategories);
 app.get("/api/reviews", getReviews);
 app.get("/api/reviews/:review_id", getReviewsID);
 // app.get("/api/reviews/:review_id/comments", getReviewsIDComment);
+app.use((err, req, res, next) => {
+  if (err.code === "22P02") {
+    err.status = 400;
+    err.message = "Invalid data type used";
+  }
+  res.status(err.status).send({ message: err.message });
+});
 
 app.use((err, req, res, next) => {
   if (!err.status || !err.message) {

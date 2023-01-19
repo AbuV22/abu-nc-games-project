@@ -24,18 +24,8 @@ const getReviews = (req, res, next) => {
 
 const getReviewsID = (req, res, next) => {
   const { review_id } = req.params;
-  if (isNaN(review_id)) {
-    const error = new Error("Invalid Review ID");
-    error.status = 400;
-    return next(error);
-  }
   fetchReviewsID(review_id)
     .then((reviews) => {
-      if (!reviews) {
-        const error = new Error("Review not found");
-        error.status = 404;
-        return next(error);
-      }
       res.status(200).send({ reviews });
     })
     .catch((err) => {
