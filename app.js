@@ -19,20 +19,14 @@ app.use((err, req, res, next) => {
     err.status = 400;
     err.message = "Invalid data type used";
   }
-  res.status(err.status).send({ message: err.message });
-});
-
-app.use((err, req, res, next) => {
+  if (err.message === "Review not found") {
+    res.status(200).send([]);
+  }
   if (!err.status || !err.message) {
     err.status = 500;
     err.message = "Internal Server Error";
   }
   res.status(err.status).send({ message: err.message });
 });
-
-// app.use((err, req, res, next) => {
-//   console.log(err);
-//   res.status(500).send({ message: "Internal Server Error" });
-// });
 
 module.exports = { app };

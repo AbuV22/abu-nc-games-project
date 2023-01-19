@@ -38,7 +38,11 @@ const getReviewsIDComment = (req, res, next) => {
   const { review_id } = req.params;
   fetchReviewsIDComment(review_id)
     .then((comments) => {
-      res.status(200).send(comments);
+      if (!comments.length) {
+        res.status(200).send([]);
+      } else {
+        res.status(200).send(comments);
+      }
     })
     .catch((err) => {
       next(err);

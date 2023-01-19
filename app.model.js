@@ -53,11 +53,9 @@ const fetchReviewsIDComment = (review_id) => {
       [review_id]
     )
     .then((data) => {
-      console.log(data.rows);
       if (!data.rows.length) {
-        return Promise.reject({ message: "Review not found", status: 404 });
+        return Promise.reject({ status: 404, message: "Review not found" });
       }
-      console.log(data.rows);
       return data.rows;
     });
 };
