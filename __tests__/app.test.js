@@ -110,7 +110,7 @@ describe("GET: /api/reviews/:review_id", () => {
   });
 });
 
-describe.only("GET: /api/reviews/:review_id/comments", () => {
+describe("GET: /api/reviews/:review_id/comments", () => {
   it("should return an array of comments for the specified review_id with the most recent comment first", () => {
     const review_id = 2;
     const expectedComment = {
@@ -157,6 +157,27 @@ describe.only("GET: /api/reviews/:review_id/comments", () => {
       .expect(200)
       .then((res) => {
         expect(res.body).toEqual([]);
+      });
+  });
+});
+
+describe.only("POST: /api/reviews/:review_id/comments", () => {
+  it("should insert a new comment into the database", () => {
+    const comment = {
+      username: "testusername",
+      body: "testcomment",
+    };
+    return request(app)
+      .post(`/api/reviews/1/comments`)
+      .send(comment)
+      .expect(201)
+      .then(() => {
+        return db.query(`
+      SELECT * FROM comments WHERE review_id=1 AND username='testusername' AND body='testcomment'
+      `);
+      })
+      .then((result) => {
+        expect(result.rows.length).toBeGreaterThan(0);
       });
   });
 });

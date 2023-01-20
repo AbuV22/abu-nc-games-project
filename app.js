@@ -5,6 +5,7 @@ const {
   getReviews,
   getReviewsID,
   getReviewsIDComment,
+  postReviewIDComments,
 } = require("./app.controller");
 const pg = require("pg");
 
@@ -13,7 +14,7 @@ app.get("/api/categories", getCategories);
 app.get("/api/reviews", getReviews);
 app.get("/api/reviews/:review_id", getReviewsID);
 app.get("/api/reviews/:review_id/comments", getReviewsIDComment);
-
+app.post("/api/reviews/:review_id/comments", postReviewIDComments);
 app.use((err, req, res, next) => {
   if (err.code === "22P02") {
     err.status = 400;

@@ -4,8 +4,10 @@ const {
   fetchReviews,
   fetchReviewsID,
   fetchReviewsIDComment,
+  insertComment,
 } = require("./app.model");
 const comments = require("./db/data/test-data/comments");
+const reviews = require("./db/data/test-data/reviews");
 
 const getCategories = (req, res, next) => {
   fetchCategories()
@@ -49,9 +51,19 @@ const getReviewsIDComment = (req, res, next) => {
     });
 };
 
+const postReviewIDComments = (req, res, next) => {
+  const { body } = req;
+  insertComment(body)
+    .then((comment) => {
+      res.status(201).send({ comment });
+    })
+    .catch(next);
+};
+
 module.exports = {
   getCategories,
   getReviews,
   getReviewsID,
   getReviewsIDComment,
+  postReviewIDComments,
 };
