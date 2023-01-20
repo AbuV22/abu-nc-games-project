@@ -19,9 +19,6 @@ app.use((err, req, res, next) => {
     err.status = 400;
     err.message = "Invalid data type used";
   }
-  if (err.message === "Review not found") {
-    res.status(200).send([]);
-  }
   if (!err.status || !err.message) {
     err.status = 500;
     err.message = "Internal Server Error";

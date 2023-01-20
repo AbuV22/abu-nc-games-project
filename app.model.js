@@ -43,20 +43,27 @@ const fetchReviewsID = (review_id) => {
 
 const fetchReviewsIDComment = (review_id) => {
   return db
-    .query(
-      `
+    .query(`SELECT review_id FROM reviews WHERE review_id = $1`, [review_id])
+    .then((data) => {
+      if (!data.rows.length) {
+        return Promise.reject({ status: 404, message: "Review not found" });
+      }
+      return db
+        .query(
+          `
   SELECT comment_id, votes, created_at, author, body, review_id
   FROM comments
   WHERE review_id = $1
   ORDER BY created_at DESC
   `,
-      [review_id]
-    )
-    .then((data) => {
-      if (!data.rows.length) {
-        return Promise.reject({ status: 404, message: "Review not found" });
-      }
-      return data.rows;
+          [review_id]
+        )
+        .then((data) => {
+          if (!data.rows.length) {
+            return [];
+          }
+          return data.rows;
+        });
     });
 };
 

@@ -133,15 +133,15 @@ describe.only("GET: /api/reviews/:review_id/comments", () => {
         }
       });
   });
-  // it("should return 404 error when the review ID doesnt exist", () => {
-  //   const reviewID = 999999;
-  //   return request(app)
-  //     .get(`/api/reviews/${reviewID}/comments`)
-  //     .expect(404)
-  //     .then((res) => {
-  //       expect(res.body.message).toEqual("Review not found");
-  //     });
-  // });
+  it("should return 404 error when the review ID doesnt exist", () => {
+    const reviewID = 999999;
+    return request(app)
+      .get(`/api/reviews/${reviewID}/comments`)
+      .expect(404)
+      .then((res) => {
+        expect(res.body.message).toEqual("Review not found");
+      });
+  });
   it("should return a 400 error when the review ID is not valid", () => {
     return request(app)
       .get(`/api/reviews/random/comments`)
