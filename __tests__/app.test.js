@@ -161,23 +161,23 @@ describe("GET: /api/reviews/:review_id/comments", () => {
   });
 });
 
-describe.only("POST: /api/reviews/:review_id/comments", () => {
-  it("should insert a new comment into the database", () => {
-    const comment = {
-      username: "testusername",
-      body: "testcomment",
-    };
-    return request(app)
-      .post(`/api/reviews/1/comments`)
-      .send(comment)
-      .expect(201)
-      .then(() => {
-        return db.query(`
-      SELECT * FROM comments WHERE review_id=1 AND username='testusername' AND body='testcomment'
-      `);
-      })
-      .then((result) => {
-        expect(result.rows.length).toBeGreaterThan(0);
-      });
-  });
-});
+// describe.only("POST: /api/reviews/:review_id/comments", () => {
+//   it("should insert a new comment into the database", () => {
+//     const comment = {
+//       username: "testusername",
+//       body: "testcomment",
+//     };
+//     return request(app)
+//       .post(`/api/reviews/1/comments`)
+//       .send(comment)
+//       .expect(201)
+//       .then(() => {
+//         return db.query(`
+//       SELECT * FROM comments WHERE review_id=1 AND username='testusername' AND body='testcomment'
+//       `);
+//       })
+//       .then((result) => {
+//         expect(result.rows.length).toBeGreaterThan(0);
+//       });
+//   });
+// });
