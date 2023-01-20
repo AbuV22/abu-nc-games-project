@@ -4,7 +4,7 @@ const {
   fetchReviews,
   fetchReviewsID,
   fetchReviewsIDComment,
-  insertComment,
+  addReviewsIDComment,
 } = require("./app.model");
 const comments = require("./db/data/test-data/comments");
 const reviews = require("./db/data/test-data/reviews");
@@ -51,13 +51,17 @@ const getReviewsIDComment = (req, res, next) => {
     });
 };
 
-const postReviewIDComments = (req, res, next) => {
-  const { body } = req;
-  insertComment(body)
+const postReviewsIDComment = (req, res, next) => {
+  const { review_id } = req.params;
+  const { username, body } = req.body;
+  addReviewsIDComment(review_id, username, body)
     .then((comment) => {
-      res.status(201).send({ comment });
+      console.log(comment);
+      res.status(201).send(comment);
     })
-    .catch(next);
+    .catch((err) => {
+      next(err);
+    });
 };
 
 module.exports = {
@@ -65,5 +69,5 @@ module.exports = {
   getReviews,
   getReviewsID,
   getReviewsIDComment,
-  postReviewIDComments,
+  postReviewsIDComment,
 };

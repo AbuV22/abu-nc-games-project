@@ -67,16 +67,16 @@ const fetchReviewsIDComment = (review_id) => {
     });
 };
 
-const insertComment = (comment) => {
+const addReviewsIDComment = (review_id, username, body) => {
   return db
     .query(
       `
-  INSERT INTO comments (username, body, review_id) VALUES ($1, $2, $3) RETURNING *
-  `,
-      [comment.username, comment.body, req.params.review_id]
+INSERT INTO comments (username, body, review_id) VALUES ($1, $2, $3) RETURNING comment_id, username, body, review_id`,
+      [username, body, review_id]
     )
-    .then(({ rows }) => {
-      return rows[0];
+    .then((data) => {
+      console.log(data);
+      return data.rows[0];
     });
 };
 
@@ -85,5 +85,5 @@ module.exports = {
   fetchReviews,
   fetchReviewsID,
   fetchReviewsIDComment,
-  insertComment,
+  addReviewsIDComment,
 };
