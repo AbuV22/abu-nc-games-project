@@ -8,7 +8,8 @@ const {
   postReviewsIDComment,
 } = require("./app.controller");
 const pg = require("pg");
-
+const cors = require("cors");
+app.use(cors());
 app.use(express.json());
 app.get("/api/categories", getCategories);
 app.get("/api/reviews", getReviews);
